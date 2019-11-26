@@ -29,8 +29,14 @@
     <v-content>
       <v-container fluid>
         <v-row>
-          <v-col>
-            <exerciseCard :exerciseData="exampleData" />
+          <v-col cols="12">
+            <v-row class="grey lighten-5" style="height: 300px;">
+              <exerciseCard
+                v-for="(exerciseCard, index) in exampleData"
+                :key="index"
+                :exerciseData="exerciseCard"
+              />
+            </v-row>
           </v-col>
         </v-row>
       </v-container>
@@ -39,7 +45,7 @@
 </template>
 
 <script>
-import ExerciseCard from "./components/ExerciseCard";
+import ExerciseCard from './components/ExerciseCard';
 
 export default {
   props: {
@@ -52,20 +58,26 @@ export default {
     drawer: null,
     exampleData: [
       {
-        date: "15.11.2019",
-        category: "Pushups",
-        warmupReps: "2",
-        warmupExercise: "Close-Pushups",
-        workReps: "2",
-        workExercise: "One-Arm-Pushups"
+        date: '15.11.2019',
+        category: 'Pushups',
+        warmupSets: '2',
+        warmupReps: '10',
+        warmupExercise: 'Close-Pushups',
+        workSets: '2',
+        workReps: '5',
+        workExercise: 'One-Arm-Pushups',
+        comment: 'quite hard todo, I do not think I am ready for that exercise'
       },
       {
-        date: "17.11.2019",
-        category: "Pullups",
-        warmupReps: "2",
-        warmupExercise: "Close-Pullups",
-        workReps: "2",
-        workExercise: "One-Arm-Pullup"
+        date: '17.11.2019',
+        category: 'Pullups',
+        warmupSets: '2',
+        warmupReps: '10',
+        warmupExercise: 'Close-Pullups',
+        workSets: '2',
+        workReps: '15',
+        workExercise: 'One-Arm-Pullup',
+        comment: 'is this even possible?'
       }
     ]
   })
