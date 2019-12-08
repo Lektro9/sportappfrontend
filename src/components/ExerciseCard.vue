@@ -6,7 +6,7 @@
       <v-list-item-content>
         <div class="overline">
           <v-icon>mdi-calendar</v-icon>
-          {{ exerciseData.date }}
+          {{ exerciseData.dateOfEntry }}
         </div>
       </v-list-item-content>
 
@@ -16,59 +16,51 @@
     </v-list-item>
 
     <form v-show="isEdit">
+      <v-text-field single-line solo v-model="exerciseData.category.name"></v-text-field>
       <v-text-field
-        single-line
-        solo
-        v-model="exerciseData.category"
-      ></v-text-field>
-      <v-text-field
+        v-for="(eEntry, index) in exerciseData.uebungseintragSet"
+        v-bind:key="index"
         label="Regular"
         id="styled-input"
         class="styled-input ma-0 pa-0"
-      >
-      </v-text-field>
-      <v-text-field
-        label="Regular"
-        id="styled-input"
-        class="styled-input ma-0 pa-0"
+        v-model="eEntry.exercise.name"
       ></v-text-field>
     </form>
 
     <v-card-title v-show="!isEdit">
       <v-icon large left>mdi-arm-flex</v-icon>
-      {{ exerciseData.category }}
+      {{ exerciseData.category.name }}
     </v-card-title>
 
-    <v-card-text class="text--primary" v-show="!isEdit">
-      <div>
-        {{ exerciseData.warmupSets }} x {{ exerciseData.warmupReps }}
-        {{ exerciseData.warmupExercise }}
-      </div>
-      <div>
-        {{ exerciseData.workSets }} x {{ exerciseData.workReps }}
-        {{ exerciseData.workExercise }}
+    <v-card-text
+      class="text--primary"
+      v-show="!isEdit"
+      v-for="(eEntry, index) in exerciseData.uebungseintragSet"
+      v-bind:key="index"
+    >
+      <div
+        v-if="eEntry.isWorkout==false"
+      >Warmup: {{ eEntry.numberOfSets }} x {{ eEntry.numberOfReps }} {{ eEntry.exercise.name }}</div>
+      <div v-if="eEntry.isWorkout==true">
+        Workout: {{ eEntry.numberOfSets }} x {{ eEntry.numberOfReps }}
+        {{ eEntry.exercise.name }}
       </div>
     </v-card-text>
 
     <v-divider></v-divider>
-    <v-card-text class="text--primary" v-show="!isEdit">{{
-      exerciseData.comment
-    }}</v-card-text>
-    <v-textarea
-      v-show="isEdit"
-      filled
-      auto-grow
-      label="Two rows"
-      rows="2"
-      row-height="20"
-    ></v-textarea>
+    <v-card-text class="text--primary" v-show="!isEdit">
+      {{
+      exerciseData.commentOfTheDay
+      }}
+    </v-card-text>
+    <v-textarea v-show="isEdit" filled auto-grow label="Two rows" rows="2" row-height="20"></v-textarea>
   </v-card>
 </template>
 
 <script>
 export default {
-  name: 'ExerciseCard',
-  props: ['exerciseData'],
+  name: "ExerciseCard",
+  props: ["exerciseData"],
   data: () => ({
     isEdit: true
   }),
